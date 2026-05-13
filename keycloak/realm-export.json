@@ -1,0 +1,155 @@
+{
+  "realm": "eoc-realm",
+  "enabled": true,
+  "displayName": "API Security Realm",
+  "sslRequired": "none",
+  "registrationAllowed": false,
+  "bruteForceProtected": true,
+  "permanentLockout": false,
+  "maxFailureWaitSeconds": 900,
+  "minimumQuickLoginWaitSeconds": 60,
+  "waitIncrementSeconds": 60,
+  "quickLoginCheckMilliSeconds": 1000,
+  "maxDeltaTimeSeconds": 43200,
+  "failureFactor": 5,
+  "accessTokenLifespan": 60,
+  "accessTokenLifespanForImplicitFlow": 60,
+  "ssoSessionIdleTimeout": 1800,
+  "ssoSessionMaxLifespan": 36000,
+  "roles": {
+    "realm": [
+      {
+        "name": "reader",
+        "description": "Can read resources"
+      },
+      {
+        "name": "writer",
+        "description": "Can read and write resources"
+      },
+      {
+        "name": "admin",
+        "description": "Full administrative access"
+      }
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "readonly-client",
+      "name": "Read-Only Service Client",
+      "description": "Client with read-only scope — simulates a reporting service or dashboard",
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "readonly-client-secret",
+      "publicClient": false,
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": true,
+      "authorizationServicesEnabled": false,
+      "protocol": "openid-connect",
+      "defaultClientScopes": [
+        "profile",
+        "email"
+      ],
+      "optionalClientScopes": [],
+      "attributes": {
+        "access.token.lifespan": "60"
+      }
+    },
+    {
+      "clientId": "readwrite-client",
+      "name": "Read-Write Service Client",
+      "description": "Client with read and write scope — simulates a backend processing service",
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "readwrite-client-secret",
+      "publicClient": false,
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": true,
+      "authorizationServicesEnabled": false,
+      "protocol": "openid-connect",
+      "defaultClientScopes": [
+        "profile",
+        "email"
+      ],
+      "optionalClientScopes": [],
+      "attributes": {
+        "access.token.lifespan": "60"
+      }
+    },
+    {
+      "clientId": "admin-client",
+      "name": "Admin Service Client",
+      "description": "Client with admin scope — simulates a privileged management service",
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "admin-client-secret",
+      "publicClient": false,
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": true,
+      "authorizationServicesEnabled": false,
+      "protocol": "openid-connect",
+      "defaultClientScopes": [
+        "profile",
+        "email"
+      ],
+      "optionalClientScopes": [],
+      "attributes": {
+        "access.token.lifespan": "60"
+      }
+    }
+  ],
+  "clientScopes": [
+    {
+      "name": "api:read",
+      "description": "Read access to API resources",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "true",
+        "display.on.consent.screen": "true"
+      }
+    },
+    {
+      "name": "api:write",
+      "description": "Write access to API resources",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "true",
+        "display.on.consent.screen": "true"
+      }
+    },
+    {
+      "name": "api:admin",
+      "description": "Administrative access to API resources",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "true",
+        "display.on.consent.screen": "true"
+      }
+    }
+  ],
+  "users": [
+    {
+      "username": "service-account-readonly-client",
+      "enabled": true,
+      "serviceAccountClientId": "readonly-client",
+      "realmRoles": ["reader"]
+    },
+    {
+      "username": "service-account-readwrite-client",
+      "enabled": true,
+      "serviceAccountClientId": "readwrite-client",
+      "realmRoles": ["reader", "writer"]
+    },
+    {
+      "username": "service-account-admin-client",
+      "enabled": true,
+      "serviceAccountClientId": "admin-client",
+      "realmRoles": ["reader", "writer", "admin"]
+    }
+  ]
+}
